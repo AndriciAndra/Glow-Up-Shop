@@ -35,8 +35,6 @@ public class About {
         this.id = id;
     }
 
-    // Getteri și setteri pentru celelalte atribute
-
     public String getSalonDescription() {
         return salonDescription;
     }

@@ -7,7 +7,8 @@ public class Contact {
         private String adresaEmail;
     private int id;
 
-    public Contact(String nume, String prenume, String numarTelefon, String adresaEmail) {
+    public Contact(String nume, String prenume, String numarTelefon, String adresaEmail)
+    {
             this.nume = nume;
             this.prenume = prenume;
             this.numarTelefon = numarTelefon;
