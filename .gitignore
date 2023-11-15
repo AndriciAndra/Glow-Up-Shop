@@ -397,8 +397,19 @@ FodyWeavers.xsd
 # JetBrains Rider
 *.sln.iml
 
-# target folder
+# Eclipse
 .classpath
 .project
 .settings/
+ 
+# Intellij
+.idea/
+*.iml
+*.iws
+ 
+# Mac
+.DS_Store
+ 
+# Maven
+log/
 target/
