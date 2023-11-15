@@ -1,26 +1,19 @@
 package org.scrum.domain.project;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
 
 public class About {
-    @JsonProperty("id")
     private int id;
 
-    @JsonProperty("salonDescription")
     private String salonDescription;
 
-    @JsonProperty("servicesOffered")
     private String servicesOffered;
 
-    @JsonProperty("servicesDescription")
     private String servicesDescription;
 
-    @JsonProperty("customerFeedback")
     private List<String> customerFeedback;
 
-    @JsonProperty("employeePhotos")
     private List<String> employeePhotos;
 
     public About() {

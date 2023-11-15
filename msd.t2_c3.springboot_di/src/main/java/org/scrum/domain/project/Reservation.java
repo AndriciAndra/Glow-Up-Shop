@@ -17,12 +17,12 @@ public class Reservation {
     private String serviceName;
 
     @JsonProperty("reservationTime")
-    private LocalDateTime reservationTime;
+    private String reservationTime;
 
     public Reservation() {
     }
 
-    public Reservation(String clientName, String serviceName, LocalDateTime reservationTime) {
+    public Reservation(String clientName, String serviceName, String reservationTime) {
         this.clientName = clientName;
         this.serviceName = serviceName;
         this.reservationTime = reservationTime;
@@ -52,11 +52,11 @@ public class Reservation {
         this.serviceName = serviceName;
     }
 
-    public LocalDateTime getReservationTime() {
+    public String getReservationTime() {
         return reservationTime;
     }
 
-    public void setReservationTime(LocalDateTime reservationTime) {
+    public void setReservationTime(String reservationTime) {
         this.reservationTime = reservationTime;
     }
 }
