@@ -1,33 +1,41 @@
 package org.scrum.domain.project;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.persistence.*;
+import lombok.Getter;
 
-@JsonInclude(JsonInclude.Include.NON_NULL)
+@Entity
+@Table(name = "item")
 public class Item {
-    @JsonProperty("id")
+    @Getter
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id")
     private int id;
 
-    @JsonProperty("productName")
+    @Getter
     private String productName;
 
-    @JsonProperty("description")
+    @Getter
     private String description;
 
-    @JsonProperty("costPrice")
-    private Double costPrice;
+    @Getter
+    private double costPrice;
 
-    @JsonProperty("salePrice")
-    private Double salePrice;
+    @Getter
+    private double salePrice;
 
-    @JsonProperty("category")
+    @Getter
     private String category;
 
-    @JsonProperty("photo")
+    @Getter
     private String photo;
 
-    @JsonProperty("currentQuantity")
+    @Getter
     private int currentQuantity;
+
+    private boolean is_activated;
+
+    private boolean is_deleted;
 
     public Item() {
 
@@ -39,7 +47,9 @@ public class Item {
                 double salePrice,
                 String category,
                 String photo,
-                int currentQuantity) {
+                int currentQuantity,
+                boolean is_activated,
+                boolean is_deleted) {
         this.productName = productName;
         this.description = description;
         this.costPrice = costPrice;
@@ -47,13 +57,23 @@ public class Item {
         this.category = category;
         this.photo = photo;
         this.currentQuantity = currentQuantity;
+        this.is_activated = is_activated;
+        this.is_deleted = is_deleted;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public int getId() {
-        return id;
+    @Override
+    public String toString() {
+        return "Item{" +
+                "id=" + id +
+                ", productName='" + productName + '\'' +
+                ", description='" + description + '\'' +
+                ", costPrice=" + costPrice +
+                ", salePrice=" + salePrice +
+                ", category='" + category + '\'' +
+                ", photo='" + photo + '\'' +
+                ", currentQuantity=" + currentQuantity +
+                ", is_activated=" + is_activated +
+                ", is_deleted=" + is_deleted +
+                '}';
     }
 }

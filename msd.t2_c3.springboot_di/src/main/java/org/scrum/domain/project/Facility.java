@@ -1,56 +1,44 @@
 package org.scrum.domain.project;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+@Setter
+@Entity
+@Table (name = "facility")
 public class Facility {
-    @JsonProperty("id")
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id")
     private int id;
 
-    @JsonProperty("facilityName")
     private String facilityName;
 
-    @JsonProperty("description")
     private String description;
 
-    @JsonProperty("costPrice")
     private Double costPrice;
 
-    @JsonProperty("salePrice")
-    private Double salePrice;
+    private double duration;
 
-    @JsonProperty("category")
     private String category;
 
-    @JsonProperty("photo")
     private String photo;
 
-    @JsonProperty("currentdisponibility")
-    private int currentdisponibility;
+    private boolean currentDisponibility;
 
-    public Facility() {
-
-    }
-
-    public Facility(String facilityName,
-                String description,
-                double costPrice,
-                double salePrice,
-                String category,
-                String photo,
-                int currentQuantity) {
-        this.facilityName = facilityName;
-        this.description = description;
-        this.costPrice = costPrice;
-        this.salePrice = salePrice;
-        this.category = category;
-        this.photo = photo;
-        this.currentdisponibility = currentdisponibility;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public void add(Facility facility) {
+    @Override
+    public String toString() {
+        return "Facility{" +
+                "id=" + id +
+                ", facilityName='" + facilityName + '\'' +
+                ", description='" + description + '\'' +
+                ", costPrice=" + costPrice +
+                ", duration=" + duration +
+                ", category='" + category + '\'' +
+                ", photo='" + photo + '\'' +
+                ", currentDisponibility=" + currentDisponibility +
+                '}';
     }
 }

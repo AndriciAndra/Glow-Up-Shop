@@ -1,62 +1,38 @@
 package org.scrum.domain.project;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
-import java.time.LocalDateTime;
+import java.util.Date;
 
-@JsonInclude(JsonInclude.Include.NON_NULL)
-public class Reservation {
-    @JsonProperty("reservationId")
+@Getter
+@Setter
+@Entity
+@Table(name = "reservation")
+class Reservation {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id")
     private int reservationId;
 
-    @JsonProperty("clientName")
-    private String clientName;
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "facility_id", referencedColumnName = "id")
+    private Facility facilityId;
 
-    @JsonProperty("serviceName")
-    private String serviceName;
+    private String status;
 
-    @JsonProperty("reservationTime")
-    private String reservationTime;
+    private Date startDate;
+    private Date endDate;
 
-    public Reservation() {
-    }
-
-    public Reservation(String clientName, String serviceName, String reservationTime) {
-        this.clientName = clientName;
-        this.serviceName = serviceName;
-        this.reservationTime = reservationTime;
-    }
-
-    public int getReservationId() {
-        return reservationId;
-    }
-
-    public void setReservationId(int reservationId) {
-        this.reservationId = reservationId;
-    }
-
-    public String getClientName() {
-        return clientName;
-    }
-
-    public void setClientName(String clientName) {
-        this.clientName = clientName;
-    }
-
-    public String getServiceName() {
-        return serviceName;
-    }
-
-    public void setServiceName(String serviceName) {
-        this.serviceName = serviceName;
-    }
-
-    public String getReservationTime() {
-        return reservationTime;
-    }
-
-    public void setReservationTime(String reservationTime) {
-        this.reservationTime = reservationTime;
+    @Override
+    public String toString() {
+        return "Reservation{" +
+                "reservationId=" + reservationId +
+                ", facilityId=" + facilityId +
+                ", status='" + status + '\'' +
+                ", startDate=" + startDate +
+                ", endDate=" + endDate +
+                '}';
     }
 }
