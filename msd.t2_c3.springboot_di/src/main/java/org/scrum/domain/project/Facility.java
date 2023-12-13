@@ -28,6 +28,20 @@ public class Facility {
 
     private boolean currentDisponibility;
 
+    public Facility(String facilityName, String description, Double costPrice, double duration, String category, String photo, boolean currentDisponibility) {
+        this.facilityName = facilityName;
+        this.description = description;
+        this.costPrice = costPrice;
+        this.duration = duration;
+        this.category = category;
+        this.photo = photo;
+        this.currentDisponibility = currentDisponibility;
+    }
+
+    public Facility() {
+
+    }
+
     @Override
     public String toString() {
         return "Facility{" +

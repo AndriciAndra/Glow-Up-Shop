@@ -10,7 +10,7 @@ import java.util.Date;
 @Setter
 @Entity
 @Table(name = "reservation")
-class Reservation {
+public class Reservation {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
@@ -18,18 +18,28 @@ class Reservation {
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "facility_id", referencedColumnName = "id")
-    private Facility facilityId;
+    private Facility facility;
 
     private String status;
 
     private Date startDate;
     private Date endDate;
 
+    public Reservation(String status, Date startDate, Date endDate) {
+        this.status = status;
+        this.startDate = startDate;
+        this.endDate = endDate;
+    }
+
+    public Reservation() {
+
+    }
+
     @Override
     public String toString() {
         return "Reservation{" +
                 "reservationId=" + reservationId +
-                ", facilityId=" + facilityId +
+                ", facility=" + facility +
                 ", status='" + status + '\'' +
                 ", startDate=" + startDate +
                 ", endDate=" + endDate +

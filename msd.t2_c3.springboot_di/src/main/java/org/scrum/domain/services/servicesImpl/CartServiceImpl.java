@@ -16,7 +16,7 @@ public class CartServiceImpl implements CartService {
     private final CartItemRepository cartItemRepository;
     @Override
     public void deleteCartById(int id) {
-        Cart cart = cartRepository.getById(id);
+        Cart cart = cartRepository.getReferenceById(id);
         if(!ObjectUtils.isEmpty(cart) && !ObjectUtils.isEmpty(cart.getCartItems())){
             cartItemRepository.deleteAll(cart.getCartItems());
         }
