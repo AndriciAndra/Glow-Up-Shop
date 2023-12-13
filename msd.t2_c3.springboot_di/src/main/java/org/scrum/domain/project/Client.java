@@ -21,7 +21,7 @@ public class Client {
     private String phone;
     private String role;
     private String address;
-    @OneToMany (mappedBy = "client", cascade = CascadeType.ALL)
+    @OneToMany (mappedBy = "clientId", cascade = CascadeType.ALL)
     private List<Order> orderList;
 
     @Override

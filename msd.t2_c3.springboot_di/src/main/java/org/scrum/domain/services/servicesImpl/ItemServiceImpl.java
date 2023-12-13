@@ -2,6 +2,7 @@ package org.scrum.domain.services.servicesImpl;
 
 import lombok.RequiredArgsConstructor;
 import org.scrum.domain.project.Item;
+import org.scrum.domain.project.dto.ItemDto;
 import org.scrum.domain.repositories.ItemRepository;
 import org.scrum.domain.services.ItemService;
 import org.springframework.stereotype.Service;
@@ -19,7 +20,7 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public Item addItem(Item item) {
+    public Item addItem(ItemDto item) {
         Item newItem = new Item(item.getProductName(), item.getDescription(), item.getCostPrice(), item.getSalePrice(), item.getCategory(), item.getPhoto(), item.getCurrentQuantity(), false, true);
         return itemRepository.save(newItem);
     }

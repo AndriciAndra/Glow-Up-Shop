@@ -7,13 +7,14 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.scrum.domain.project.Reservation;
-import org.scrum.domain.services.ReservationService;
+import org.scrum.domain.services.servicesImpl.ReservationServiceImpl;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 import static org.mockito.ArgumentMatchers.any;
@@ -28,7 +29,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ExtendWith(MockitoExtension.class)
 public class TestJupiterProjectDomainReservationControllerDefSDI {
     @Mock
-    private ReservationService reservationService;
+    private ReservationServiceImpl reservationService;
 
     @InjectMocks
     private ReservationController reservationController;
@@ -38,8 +39,8 @@ public class TestJupiterProjectDomainReservationControllerDefSDI {
     @Test
     void getAllFacilities() throws Exception {
         List<Reservation> reservations = Arrays.asList(
-                new Reservation("Ana", "coafor", "21.11.2023"),
-                new Reservation("Marina", "tratament", "23.11.2023")
+                new Reservation("pending", new Date(), new Date()),
+                new Reservation("pending", new Date(), new Date())
         );
 
         when(reservationService.getAllReservations()).thenReturn(reservations);
@@ -55,8 +56,8 @@ public class TestJupiterProjectDomainReservationControllerDefSDI {
 
     @Test
     void addItem() throws Exception {
-        Reservation reservation = new Reservation("Ana", "coafor", "12.11.2023");
-        when(reservationService.addReservation(any())).thenReturn(reservation);
+        Reservation reservation = new Reservation("pending", new Date(), new Date());
+        when(reservationService.addReservation(any(), any(), any())).thenReturn(reservation);
 
         mockMvc = MockMvcBuilders.standaloneSetup(reservationController).build();
 

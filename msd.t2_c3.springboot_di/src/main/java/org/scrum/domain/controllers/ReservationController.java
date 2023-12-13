@@ -1,7 +1,9 @@
 package org.scrum.domain.controllers;
 
+import org.scrum.domain.project.Client;
+import org.scrum.domain.project.Facility;
 import org.scrum.domain.project.Reservation;
-import org.scrum.domain.services.ReservationService;
+import org.scrum.domain.services.servicesImpl.ReservationServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,7 +13,7 @@ import java.util.List;
 @RequestMapping("/reservations")
 public class ReservationController {
     @Autowired
-    private ReservationService reservationService;
+    private ReservationServiceImpl reservationService;
 
     @GetMapping("/")
     public List<Reservation> getAllReservations() {
@@ -19,7 +21,7 @@ public class ReservationController {
     }
 
     @PostMapping(value = "/addReservation", consumes = "application/json")
-    public Reservation addReservation(@RequestBody Reservation reservation) {
-        return reservationService.addReservation(reservation);
+    public Reservation addReservation(@RequestBody Reservation reservation, @RequestBody Client client, @RequestBody Facility facility) {
+        return reservationService.addReservation(reservation, client, facility);
     }
 }

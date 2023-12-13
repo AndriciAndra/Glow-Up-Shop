@@ -7,7 +7,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.scrum.domain.project.Facility;
-import org.scrum.domain.services.FacilityService;
+import org.scrum.domain.services.servicesImpl.FacilityServiceImpl;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
@@ -28,7 +28,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ExtendWith(MockitoExtension.class)
 public class TestJupiterProjectDomainFacilityControllerDefSDI {
     @Mock
-    private FacilityService facilityService;
+    private FacilityServiceImpl facilityServiceImpl;
 
     @InjectMocks
     private FacilityController facilityController;
@@ -38,11 +38,11 @@ public class TestJupiterProjectDomainFacilityControllerDefSDI {
     @Test
     void getAllFacilities() throws Exception {
         List<Facility> facilities = Arrays.asList(
-                new Facility("Example1", "This is an example1", 15.0, 3.0, "Example Category1", "example1.jpg", 30),
-                new Facility("Example2", "This is an example2", 10.0, 2.0, "Example Category2", "example2.jpg", 20)
+                new Facility("Example1", "This is an example1", 15.0, 3.0, "Example Category1", "example1.jpg", true),
+                new Facility("Example2", "This is an example2", 10.0, 2.0, "Example Category2", "example2.jpg", true)
         );
 
-        when(facilityService.getAllFacilities()).thenReturn(facilities);
+        when(facilityServiceImpl.getAll()).thenReturn(facilities);
 
         mockMvc = MockMvcBuilders.standaloneSetup(facilityController).build();
 
@@ -55,8 +55,8 @@ public class TestJupiterProjectDomainFacilityControllerDefSDI {
 
     @Test
     void addItem() throws Exception {
-        Facility facility = new Facility("Example", "This is an example", 10.0, 2.0, "Example Category", "example.jpg", 20);
-        when(facilityService.addFacility(any())).thenReturn(facility);
+        Facility facility = new Facility("Example", "This is an example", 10.0, 2.0, "Example Category", "example.jpg", true);
+        when(facilityServiceImpl.addFacility(any())).thenReturn(facility);
 
         mockMvc = MockMvcBuilders.standaloneSetup(facilityController).build();
 

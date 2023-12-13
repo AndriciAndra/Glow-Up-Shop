@@ -8,9 +8,9 @@ import lombok.Getter;
 public class Item {
     @Getter
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id")
-    private int id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false)
+    private Integer id;
 
     @Getter
     private String productName;
@@ -37,10 +37,6 @@ public class Item {
 
     private boolean is_deleted;
 
-    public Item() {
-
-    }
-
     public Item(String productName,
                 String description,
                 double costPrice,
@@ -59,6 +55,10 @@ public class Item {
         this.currentQuantity = currentQuantity;
         this.is_activated = is_activated;
         this.is_deleted = is_deleted;
+    }
+
+    public Item() {
+
     }
 
     @Override

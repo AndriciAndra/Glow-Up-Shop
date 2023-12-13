@@ -6,7 +6,7 @@ import lombok.Setter;
 
 @Setter
 @Entity
-@Table(name = "orderDetail")
+@Table(name = "order_detail")
 public class OrderDetail {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
