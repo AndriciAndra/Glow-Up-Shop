@@ -1,12 +1,8 @@
 package org.scrum.domain.project.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
-@Getter
-@Setter
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class ClientDto {
@@ -16,6 +12,6 @@ public class ClientDto {
     private String password;
     private String avatar;
     private String phone;
+    private String role;
     private String address;
-
 }

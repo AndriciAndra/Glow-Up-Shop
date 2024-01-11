@@ -9,6 +9,9 @@ import java.util.List;
 
 @Repository
 public interface ItemRepository extends JpaRepository<Item, Integer> {
-    @Query("select p from Item p where p.is_deleted = false and p.is_activated = true")
+    @Query("select p from Item p where p.isDeleted = false and p.isActivated = true")
     List<Item> getAllItem();
+
+    @Query("select p from Item p where p.category = ?1 and p.isActivated = true and p.isDeleted = false")
+    List<Item> findAllByCategory(String category);
 }

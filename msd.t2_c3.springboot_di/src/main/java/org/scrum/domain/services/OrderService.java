@@ -2,10 +2,14 @@ package org.scrum.domain.services;
 
 import org.scrum.domain.project.Cart;
 import org.scrum.domain.project.Order;
-
-import java.util.List;
+import org.springframework.http.ResponseEntity;
 
 public interface OrderService {
     Order addOrder(Cart cart);
-    List<Order> getAllOrders();
+
+    ResponseEntity<Object> getAllOrders();
+
+    ResponseEntity<Object> acceptOrder(int id);
+
+    ResponseEntity<Object> cancelOrder(int id);
 }

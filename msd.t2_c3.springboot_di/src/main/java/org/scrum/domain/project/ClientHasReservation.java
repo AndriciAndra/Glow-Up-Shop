@@ -12,7 +12,7 @@ public class ClientHasReservation {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
-    private int id;
+    private Integer id;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "client_id", referencedColumnName = "id")

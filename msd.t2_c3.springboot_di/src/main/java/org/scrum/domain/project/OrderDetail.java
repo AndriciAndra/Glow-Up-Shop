@@ -11,7 +11,7 @@ public class OrderDetail {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
-    private int id;
+    private Integer id;
     private int totalQuantity;
     private double totalPrice;
     @OneToOne(fetch = FetchType.LAZY)

@@ -10,7 +10,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class FacilityDto {
-    private int id;
+    private Integer id;
     private String facilityName;
     private String description;
     private Double costPrice;

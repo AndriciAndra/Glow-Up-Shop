@@ -1,18 +1,21 @@
 package org.scrum.domain.project;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.Setter;
 
 import java.util.List;
 
 @Getter
+@Setter
 @Entity
 @Table (name = "client")
 public class Client {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
-    private int client_id;
+    private Integer client_id;
     private String firstName;
     private String lastName;
     private String username;
@@ -21,6 +24,9 @@ public class Client {
     private String phone;
     private String role;
     private String address;
+    @OneToOne(mappedBy = "client", cascade = CascadeType.ALL)
+    @JsonIgnore
+    private Cart cart;
     @OneToMany (mappedBy = "clientId", cascade = CascadeType.ALL)
     private List<Order> orderList;
 
@@ -36,6 +42,7 @@ public class Client {
                 ", phone='" + phone + '\'' +
                 ", role='" + role + '\'' +
                 ", address='" + address + '\'' +
+                ", cart=" + cart +
                 ", orderList=" + orderList +
                 '}';
     }

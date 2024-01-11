@@ -1,8 +1,7 @@
 package org.scrum.domain.project.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.scrum.domain.project.Item;
 
 @Data
 @NoArgsConstructor
@@ -16,18 +15,19 @@ public class ItemDto {
     private String category;
     private String photo;
     private int currentQuantity;
-    private boolean is_activated;
-    private boolean is_deleted;
+    private boolean isActivated;
+    private boolean isDeleted;
 
-    public ItemDto(String productName, String description, double costPrice, double salePrice, String category, String photo, int currentQuantity, boolean is_activated, boolean is_deleted) {
-        this.productName = productName;
-        this.description = description;
-        this.costPrice = costPrice;
-        this.salePrice = salePrice;
-        this.category = category;
-        this.photo = photo;
-        this.currentQuantity = currentQuantity;
-        this.is_activated = is_activated;
-        this.is_deleted = is_deleted;
+    public ItemDto(Item item) {
+        this.id = item.getId();
+        this.productName = item.getProductName();
+        this.description = item.getDescription();
+        this.costPrice = item.getCostPrice();
+        this.salePrice = item.getSalePrice();
+        this.category = item.getCategory();
+        this.photo = item.getPhoto();
+        this.currentQuantity = item.getCurrentQuantity();
+        this.isActivated = item.isActivated();
+        this.isDeleted = item.isDeleted();
     }
 }

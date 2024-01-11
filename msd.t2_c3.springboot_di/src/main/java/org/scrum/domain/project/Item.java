@@ -2,40 +2,36 @@ package org.scrum.domain.project;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.Setter;
+import org.scrum.domain.project.dto.ItemDto;
 
+@Getter
+@Setter
 @Entity
 @Table(name = "item")
 public class Item {
-    @Getter
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Integer id;
 
-    @Getter
     private String productName;
 
-    @Getter
     private String description;
 
-    @Getter
     private double costPrice;
 
-    @Getter
     private double salePrice;
 
-    @Getter
     private String category;
 
-    @Getter
     private String photo;
 
-    @Getter
     private int currentQuantity;
 
-    private boolean is_activated;
+    private boolean isActivated;
 
-    private boolean is_deleted;
+    private boolean isDeleted;
 
     public Item(String productName,
                 String description,
@@ -44,8 +40,8 @@ public class Item {
                 String category,
                 String photo,
                 int currentQuantity,
-                boolean is_activated,
-                boolean is_deleted) {
+                boolean isActivated,
+                boolean isDeleted) {
         this.productName = productName;
         this.description = description;
         this.costPrice = costPrice;
@@ -53,12 +49,22 @@ public class Item {
         this.category = category;
         this.photo = photo;
         this.currentQuantity = currentQuantity;
-        this.is_activated = is_activated;
-        this.is_deleted = is_deleted;
+        this.isActivated = isActivated;
+        this.isDeleted = isDeleted;
     }
 
     public Item() {
+    }
 
+    public void copyItem(ItemDto item) {
+        this.productName = item.getProductName();
+        this.description = item.getDescription();
+        this.costPrice = item.getCostPrice();
+        this.salePrice = item.getSalePrice();
+        this.category = item.getCategory();
+        this.currentQuantity = item.getCurrentQuantity();
+        this.isActivated = item.isActivated();
+        this.isDeleted = item.isDeleted();
     }
 
     @Override
@@ -72,8 +78,8 @@ public class Item {
                 ", category='" + category + '\'' +
                 ", photo='" + photo + '\'' +
                 ", currentQuantity=" + currentQuantity +
-                ", is_activated=" + is_activated +
-                ", is_deleted=" + is_deleted +
+                ", is_activated=" + isActivated +
+                ", is_deleted=" + isDeleted +
                 '}';
     }
 }

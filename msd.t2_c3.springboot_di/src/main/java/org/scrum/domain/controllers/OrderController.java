@@ -1,25 +1,43 @@
 package org.scrum.domain.controllers;
 
+import org.scrum.domain.project.Cart;
+import org.scrum.domain.project.Client;
 import org.scrum.domain.project.Order;
-import org.scrum.domain.services.servicesImpl.OrderServiceImpl;
+import org.scrum.domain.services.ClientService;
+import org.scrum.domain.services.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/orders")
 public class OrderController {
     @Autowired
-    private OrderServiceImpl orderServiceImpl;
+    private OrderService orderService;
+
+    @Autowired
+    private ClientService clientService;
 
     @GetMapping("/")
-    public List<Order> getAllOrders() {
-        return orderServiceImpl.getAllOrders();
+    public ResponseEntity<Object> getAllOrders() {
+        return orderService.getAllOrders();
     }
 
-//    @PostMapping(value = "/addOrder", consumes = "application/json")
-//    public Order addOrder(@RequestBody Order storeItem) {
-//        return orderServiceImpl.addOrder(storeItem);
-//    }
+    @PostMapping("/addOrder")
+    public Order addOrder(@Param("username") String username) {
+        Client client = clientService.findByUsername(username);
+        Cart cart = client.getCart();
+        return orderService.addOrder(cart);
+    }
+
+    @PutMapping("/acceptOrder/{id}")
+    public ResponseEntity<Object> acceptOrder(@PathVariable int id) {
+        return orderService.acceptOrder(id);
+    }
+
+    @DeleteMapping("/deleteOrder/{id}")
+    public ResponseEntity<Object> cancelOrder(@PathVariable int id) {
+        return orderService.cancelOrder(id);
+    }
 }

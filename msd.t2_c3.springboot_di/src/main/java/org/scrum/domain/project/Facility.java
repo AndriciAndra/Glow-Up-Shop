@@ -12,7 +12,7 @@ public class Facility {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
-    private int id;
+    private Integer id;
 
     private String facilityName;
 

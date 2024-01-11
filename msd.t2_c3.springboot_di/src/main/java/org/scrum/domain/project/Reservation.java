@@ -14,7 +14,7 @@ public class Reservation {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
-    private int reservationId;
+    private Integer reservationId;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "facility_id", referencedColumnName = "id")

@@ -15,7 +15,7 @@ public class Cart {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
-    private int id;
+    private Integer id;
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "client_id", referencedColumnName = "id")
     private Client client;
@@ -24,7 +24,7 @@ public class Cart {
 
     private int totalItems;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "cart")
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "cart")
     private Set<CartItem> cartItems;
 
     public Cart() {
@@ -35,12 +35,12 @@ public class Cart {
 
     @Override
     public String toString() {
-        return "ShoppingCart{" +
+        return "Cart{" +
                 "id=" + id +
-                ", customer=" + client.getUsername() +
+                ", client=" + client.getClient_id() + // Exclude the client field here
                 ", totalPrice=" + totalPrice +
                 ", totalItems=" + totalItems +
-                ", cartItems=" + cartItems.size() +
+                ", cartItems=" + cartItems +
                 '}';
     }
 }
