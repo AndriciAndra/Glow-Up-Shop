@@ -1,0 +1,43 @@
+<div class="row">
+    <div class="col-8">
+        <div class="CartContainer">
+            <div class="row">
+              <div class="col-12">
+                <h3>Cart Items</h3>
+              </div> 
+            </div>
+            <div class="row pt-1" *ngFor="let cartItem of cart?.cartItems"> 
+              <div class="col-3">
+                {{cartItem.item.productName}}
+              </div>
+              <div class="col-2">
+                x {{cartItem.quantity}}
+              </div>
+              <div class="col-2 text-end">
+                ${{cartItem.item.salePrice}}
+              </div>
+              <div class="col-2 text-end">
+                  <button class="btn btn-sm btn-danger" (click)="RemoveItem(cartItem.item.id)">Remove</button> 
+               </div>
+            </div>
+           
+            <div class="row">
+              
+              <div class="col-9">
+                <hr>
+              </div>
+            </div>
+           
+            <div class="row">
+              
+              <div class="col-4">
+                <div class="Subtotal">Total items</div>
+                <div> <small>{{cart?.totalItems}}</small></div>
+              </div>
+              <div class="col-4 text-end">
+                <strong> ${{cart?.totalPrice}} </strong>
+              </div>
+            </div>
+          </div>
+    </div>
+</div>
