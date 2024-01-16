@@ -3,6 +3,7 @@ import { ProductService } from './services/product.service';
 import { Router } from '@angular/router';
 import { Cart } from './models/cart.model';
 import { TotalItemsService } from './services/totalItems.service';
+import { UpdateCartService } from './services/update-cart.service';
 
 @Component({
   selector: 'app-root',
@@ -27,6 +28,10 @@ export class AppComponent implements OnInit {
 
   redirectToSale() {
     this.router.navigateByUrl("/sale");
+  }
+
+  redirectToOrderHistory() {
+    this.router.navigateByUrl("/orderHistory")
   }
 
   loadCart() {

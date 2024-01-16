@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { Item } from '../models/item.model';
 import { Cart } from '../models/cart.model';
+import { Order } from '../models/order.model';
 
 @Injectable({
   providedIn: 'root'
@@ -31,5 +32,15 @@ export class ProductService {
   }
   removeCartItemById(itemId: number, username: string) : Observable<any[]>  {
     return this.http.delete<any[]>("http://localhost:8090/scrum/cart/removeItem?itemId=" + itemId + "&client=" + username);
+  }
+
+  sentOrder(username: string) : Observable<any> {
+    const params = new HttpParams()
+    .set ('username',  username)
+    return this.http.post<any>("http://localhost:8090/scrum/orders/addOrder",params);
+  }
+
+  getOrdersByUserId(userId: number): Observable<Order[]> {
+    return this.http.get<Order[]>('http://localhost:8090/scrum/orders/' + userId);
   }
 }

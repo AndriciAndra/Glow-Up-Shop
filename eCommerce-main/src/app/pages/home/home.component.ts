@@ -5,6 +5,7 @@ import {
   MatSnackBar
 } from '@angular/material/snack-bar';
 import { TotalItemsService } from 'src/app/services/totalItems.service';
+import { UpdateCartService } from 'src/app/services/update-cart.service';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -16,7 +17,8 @@ export class HomeComponent implements OnInit{
   
   constructor(private productService: ProductService,
     private _snackBar: MatSnackBar,
-    private totalItemsService: TotalItemsService) {
+    private totalItemsService: TotalItemsService,
+    private updateCartService: UpdateCartService) {
 
   }
   ngOnInit(): void {
@@ -36,9 +38,10 @@ export class HomeComponent implements OnInit{
     return 'data:image/jpeg;base64,' + base64String;
   }
 
-  addItemToCart(productId: number) {
-    this.productService.addToCart(productId, 1, "Andreea").subscribe();
+  addItemToCart(product: Item) {
+    this.productService.addToCart(product.id, 1, "Andreea").subscribe();
     this._snackBar.open("Item added to the cart!", "X", {duration: 5000});
     this.totalItemsService.updateNumber(1);
+    this.updateCartService.updateCart(1);
   }
 }

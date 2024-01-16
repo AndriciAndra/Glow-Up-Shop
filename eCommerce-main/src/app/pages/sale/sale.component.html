@@ -17,7 +17,7 @@
                 ${{cartItem.item.salePrice}}
               </div>
               <div class="col-2 text-end">
-                  <button class="btn btn-sm btn-danger" (click)="RemoveItem(cartItem.item.id)">Remove</button> 
+                  <button class="btn btn-sm btn-danger" (click)="RemoveItem(cartItem)">Remove</button> 
                </div>
             </div>
            
@@ -37,6 +37,7 @@
               <div class="col-4 text-end">
                 <strong> ${{cart?.totalPrice}} </strong>
               </div>
+              <button class="send-order" mat-raised-button color="primary" (click)="SentOrder()">Sent</button> 
             </div>
           </div>
     </div>

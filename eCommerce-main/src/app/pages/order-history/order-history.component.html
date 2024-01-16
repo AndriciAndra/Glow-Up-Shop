@@ -1,0 +1,58 @@
+<mat-accordion>
+    <mat-expansion-panel *ngFor="let order of orders">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Order no. {{order.orderId}} - {{order.dateOrder}}
+        </mat-panel-title>
+        <mat-panel-description>
+          {{order.status}}
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <div class="row">
+        <div class="col-8">
+            <div class="CartContainer">
+                <div class="row">
+                  <div class="col-12">
+                    <h3>Order Items</h3>
+                  </div> 
+                </div>
+                <div class="row pt-1" *ngFor="let orderItem of order.orderDetailList"> 
+                  <div class="col-3">
+                    {{orderItem.item.productName}}
+                  </div>
+                  <div class="col-2">
+                    x {{orderItem.totalQuantity}}
+                  </div>
+                  <div class="col-2 text-end">
+                    ${{orderItem.totalPrice}}
+                  </div>
+                </div>
+               
+                <div class="row">
+                  
+                  <div class="col-9">
+                    <hr>
+                  </div>
+                </div>
+               
+                <div class="row">
+                  
+                  <div class="col-4">
+                    <div class="Subtotal">Total items</div>
+                    <div> <small>{{order.quantity}}</small></div>
+                  </div>
+                  <div class="col-4 text-end">
+                    <strong> ${{order.totalPrice}} </strong>
+                  </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-8">
+                        Expected delivery date: {{order.deliveryDate}}
+                    </div>
+                </div>
+              </div>
+        </div>
+    </div>
+    </mat-expansion-panel>
+  </mat-accordion>
