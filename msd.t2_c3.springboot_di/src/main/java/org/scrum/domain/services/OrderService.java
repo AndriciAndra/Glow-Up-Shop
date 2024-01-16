@@ -1,13 +1,15 @@
 package org.scrum.domain.services;
 
 import org.scrum.domain.project.Cart;
-import org.scrum.domain.project.Order;
+import org.scrum.domain.project.dto.OrderDto;
 import org.springframework.http.ResponseEntity;
 
-public interface OrderService {
-    Order addOrder(Cart cart);
+import java.util.List;
 
-    ResponseEntity<Object> getAllOrders();
+public interface OrderService {
+    ResponseEntity<Object> addOrder(Cart cart);
+
+    List<OrderDto> getOrdersByClient(int id);
 
     ResponseEntity<Object> acceptOrder(int id);
 

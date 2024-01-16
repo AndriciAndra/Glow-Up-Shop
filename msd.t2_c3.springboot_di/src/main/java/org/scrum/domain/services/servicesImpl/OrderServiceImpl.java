@@ -1,10 +1,8 @@
 package org.scrum.domain.services.servicesImpl;
 
 import lombok.RequiredArgsConstructor;
-import org.scrum.domain.project.Cart;
-import org.scrum.domain.project.CartItem;
-import org.scrum.domain.project.Order;
-import org.scrum.domain.project.OrderDetail;
+import org.scrum.domain.project.*;
+import org.scrum.domain.project.dto.OrderDto;
 import org.scrum.domain.repositories.OrderRepository;
 import org.scrum.domain.repositories.OrderDetailRepository;
 import org.scrum.domain.services.CartService;
@@ -26,7 +24,7 @@ public class OrderServiceImpl implements OrderService {
     private final CartService cartService;
 
     @Override
-    public Order addOrder(Cart cart) {
+    public ResponseEntity<Object> addOrder(Cart cart) {
         Order order = new Order(cart.getClient(), cart.getTotalPrice(), new Date(), "Pending", 2, cart.getTotalItems(), false);
         List<OrderDetail> orderDetailList = new ArrayList<>();
         for (CartItem item : cart.getCartItems()) {
@@ -38,25 +36,32 @@ public class OrderServiceImpl implements OrderService {
         }
         order.setOrderDetailList(orderDetailList);
         cartService.deleteCartById(cart.getId());
-        return orderRepository.save(order);
+        orderRepository.save(order);
+        return new ResponseEntity<>("Order sent!", HttpStatus.CREATED);
     }
 
     @Override
-    public ResponseEntity<Object> getAllOrders() {
-        List<Order> orderList = orderRepository.getAllOrders();
-        System.out.println(orderList.get(0));
-        if (orderList.isEmpty())
-            return new ResponseEntity<>("Orders not found!", HttpStatus.NOT_FOUND);
-        return new ResponseEntity<>(orderList, HttpStatus.OK);
+    public List<OrderDto> getOrdersByClient(int id) {
+        return transferData(orderRepository.getAllOrdersByClientId(id));
+    }
+
+    private List<OrderDto> transferData(List<Order> orders) {
+        List<OrderDto> orderDtos = new ArrayList<>();
+        for (Order order : orders) {
+            OrderDto orderDto = new OrderDto(order);
+            orderDtos.add(orderDto);
+        }
+        return orderDtos;
     }
 
     @Override
     public ResponseEntity<Object> acceptOrder(int id) {
         Optional<Order> order = orderRepository.findById(id);
-        if(order.isEmpty())
+        if (order.isEmpty())
             return new ResponseEntity<>("Order not found!", HttpStatus.GONE);
         order.get().setAccept(true);
         order.get().setDeliveryDate(new Date());
+        order.get().setStatus("In delivery");
         orderRepository.save(order.get());
         return new ResponseEntity<>("Order accepted!", HttpStatus.OK);
     }
@@ -64,7 +69,7 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public ResponseEntity<Object> cancelOrder(int id) {
         Optional<Order> order = orderRepository.findById(id);
-        if(order.isEmpty())
+        if (order.isEmpty())
             return new ResponseEntity<>("Order not found!", HttpStatus.GONE);
         orderRepository.deleteById(id);
         return new ResponseEntity<>("Order deleted!", HttpStatus.OK);

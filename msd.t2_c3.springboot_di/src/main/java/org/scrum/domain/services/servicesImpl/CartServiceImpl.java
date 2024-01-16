@@ -115,9 +115,9 @@ public class CartServiceImpl implements CartService {
         Optional<Cart> cart = cartRepository.findById(id);
         if (cart.isPresent()) {
             if (!ObjectUtils.isEmpty(cart) && !ObjectUtils.isEmpty(cart.get().getCartItems())) {
-                cartItemRepository.deleteAll(cart.get().getCartItems());
+                cartItemRepository.deleteCartItemBy(id);
             }
-            cartRepository.delete(cart.get());
+            cartRepository.updateCartById(id);
         }
     }
 

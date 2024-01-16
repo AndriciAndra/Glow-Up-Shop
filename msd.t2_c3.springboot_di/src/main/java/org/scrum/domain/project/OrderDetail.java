@@ -1,10 +1,12 @@
 package org.scrum.domain.project;
 
 import jakarta.persistence.*;
+import lombok.Getter;
 import lombok.Setter;
 
 
 @Setter
+@Getter
 @Entity
 @Table(name = "order_detail")
 public class OrderDetail {

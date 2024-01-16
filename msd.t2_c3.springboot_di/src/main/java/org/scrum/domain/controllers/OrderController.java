@@ -2,7 +2,7 @@ package org.scrum.domain.controllers;
 
 import org.scrum.domain.project.Cart;
 import org.scrum.domain.project.Client;
-import org.scrum.domain.project.Order;
+import org.scrum.domain.project.dto.OrderDto;
 import org.scrum.domain.services.ClientService;
 import org.scrum.domain.services.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +10,9 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/orders")
 public class OrderController {
@@ -19,13 +22,13 @@ public class OrderController {
     @Autowired
     private ClientService clientService;
 
-    @GetMapping("/")
-    public ResponseEntity<Object> getAllOrders() {
-        return orderService.getAllOrders();
+    @GetMapping("/{id}")
+    public List<OrderDto> getAllOrders(@PathVariable int id) {
+        return orderService.getOrdersByClient(id);
     }
 
     @PostMapping("/addOrder")
-    public Order addOrder(@Param("username") String username) {
+    public ResponseEntity<Object> addOrder(@Param("username") String username) {
         Client client = clientService.findByUsername(username);
         Cart cart = client.getCart();
         return orderService.addOrder(cart);
