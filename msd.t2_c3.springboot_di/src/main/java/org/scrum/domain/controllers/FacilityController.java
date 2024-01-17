@@ -24,12 +24,12 @@ public class FacilityController {
         this.facilityService = facilityService;
     }
 
-    @GetMapping
+    @GetMapping("/")
     public List<FacilityDto> getAllFacilities() {
         return facilityService.getAll();
     }
 
-    @PostMapping(value = "/addFacility", consumes = "application/json")
+    @PostMapping("/addFacility")
     public Facility addFacility(@RequestParam("facility") String facilityJson,
                                 @RequestParam("image") MultipartFile imageItem) {
         try {
