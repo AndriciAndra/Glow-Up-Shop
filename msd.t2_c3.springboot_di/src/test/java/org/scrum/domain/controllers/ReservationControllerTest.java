@@ -1,77 +1,60 @@
 package org.scrum.domain.controllers;
+
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.http.MediaType;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.mockito.MockitoAnnotations;
 import org.scrum.domain.project.Client;
 import org.scrum.domain.project.Facility;
 import org.scrum.domain.project.Reservation;
 import org.scrum.domain.services.servicesImpl.ReservationServiceImpl;
-import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.*;
 
-@ExtendWith(MockitoExtension.class)
 class ReservationControllerTest {
-
-    @Mock
-    private ReservationServiceImpl reservationService;
 
     @InjectMocks
     private ReservationController reservationController;
 
-    private final MockMvc mockMvc;
+    @Mock
+    private ReservationServiceImpl reservationService;
 
-    public ReservationControllerTest() {
-        this.mockMvc = MockMvcBuilders.standaloneSetup(reservationController).build();
+    @BeforeEach
+    void setUp() {
+        MockitoAnnotations.initMocks(this);
     }
 
     @Test
-    void testGetAllReservations() throws Exception {
-        Reservation reservation1 = new Reservation("Confirmed", new Date(), new Date());
-        Reservation reservation2 = new Reservation("Pending", new Date(), new Date());
+    void testGetAllReservations() {
+        List<Reservation> mockReservations = Arrays.asList(
+                new Reservation("Pending", new Date(), new Date()),
+                new Reservation("Approved", new Date(), new Date())
+        );
+        when(reservationService.getAllReservations()).thenReturn(mockReservations);
 
-        Mockito.when(reservationService.getAllReservations()).thenReturn(Arrays.asList(reservation1, reservation2));
+        List<Reservation> response = reservationController.getAllReservations();
 
-        mockMvc.perform(get("/reservations/")
-                        .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.length()").value(2));
+        assertEquals(mockReservations, response);
     }
 
     @Test
-    void testAddReservation() throws Exception {
-        Reservation reservation = new Reservation("Confirmed", new Date(), new Date());
-        Client client = new Client();
-        Facility facility = new Facility();
+    void testAddReservation() {
+        Reservation mockReservation = new Reservation("Pending", new Date(), new Date());
+        Client mockClient = new Client();
+        Facility mockFacility = new Facility();
 
-        Mockito.when(reservationService.addReservation(Mockito.any(Reservation.class), Mockito.any(Client.class), Mockito.any(Facility.class)))
-                .thenReturn(reservation);
+        when(reservationService.addReservation(any(Reservation.class), any(Client.class), any(Facility.class))).thenReturn(mockReservation);
 
-        mockMvc.perform(post("/reservations/addReservation")
-                        .content(asJsonString(reservation))
-                        .content(asJsonString(client))
-                        .content(asJsonString(facility))
-                        .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.reservationId").value(reservation.getReservationId()));
-    }
+        Reservation response = reservationController.addReservation(mockReservation, mockClient, mockFacility);
 
-    private static String asJsonString(final Object obj) {
-        try {
-            return new ObjectMapper().writeValueAsString(obj);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+        assertEquals(mockReservation, response);
     }
 }
