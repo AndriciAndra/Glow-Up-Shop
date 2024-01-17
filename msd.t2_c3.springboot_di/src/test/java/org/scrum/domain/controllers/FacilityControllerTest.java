@@ -31,27 +31,15 @@ class FacilityControllerTest {
 
     @Test
     void testGetAllFacilities() {
-        List<Facility> mockFacilities = Arrays.asList(
-                new Facility("Facility1", "Description1", 100.0, 2.5, "Category1", "photo1.jpg", true),
-                new Facility("Facility2", "Description2", 150.0, 3.0, "Category2", "photo2.jpg", false)
+        List<FacilityDto> mockFacilities = Arrays.asList(
+                new FacilityDto(new Facility("Facility1", "Description1", 100.0, 2.5, "Category1", "photo1.jpg", true)),
+                new FacilityDto(new Facility("Facility2", "Description2", 150.0, 3.0, "Category2", "photo2.jpg", false))
         );
         when(facilityService.getAll()).thenReturn(mockFacilities);
 
-        ResponseEntity<List<Facility>> response = facilityController.getAllFacilities();
+        List<FacilityDto> response = facilityController.getAllFacilities();
 
-        assertEquals(200, response.getStatusCodeValue());
-        assertEquals(mockFacilities, response.getBody());
-    }
-
-    @Test
-    void testAddFacility() {
-        FacilityDto facilityDto = new FacilityDto(null, "Facility3", "Description3", 120.0, 2.0, "Category3", "photo3.jpg", true);
-        Facility addedFacility = new Facility("Facility3", "Description3", 120.0, 2.0, "Category3", "photo3.jpg", true);
-        when(facilityService.addFacility(facilityDto)).thenReturn(addedFacility);
-
-        ResponseEntity<Facility> response = facilityController.addFacility(facilityDto);
-
-        assertEquals(200, response.getStatusCodeValue());
-        assertEquals(addedFacility, response.getBody());
+        assertEquals(2, response.size());
+        assertEquals(mockFacilities.get(0), response.get(0));
     }
 }

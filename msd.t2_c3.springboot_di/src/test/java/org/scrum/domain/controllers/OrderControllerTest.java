@@ -1,26 +1,29 @@
 package org.scrum.domain.controllers;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
-import org.scrum.domain.project.Cart;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.scrum.domain.project.Client;
-import org.scrum.domain.project.Order;
 import org.scrum.domain.services.ClientService;
 import org.scrum.domain.services.OrderService;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mock.web.MockHttpServletResponse;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import java.util.Date;
+import java.util.Collections;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 
+@ExtendWith(MockitoExtension.class)
 class OrderControllerTest {
-
-    @InjectMocks
-    private OrderController orderController;
 
     @Mock
     private OrderService orderService;
@@ -28,37 +31,53 @@ class OrderControllerTest {
     @Mock
     private ClientService clientService;
 
-    @BeforeEach
-    void setUp() {
-        MockitoAnnotations.initMocks(this);
+    @InjectMocks
+    private OrderController orderController;
+
+    @Test
+    void getAllOrders() throws Exception {
+        when(orderService.getOrdersByClient(1)).thenReturn(Collections.emptyList());
+
+        MockMvc mockMvc = MockMvcBuilders.standaloneSetup(orderController).build();
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/orders/1"))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.content().json("[]"));
     }
 
     @Test
-    void testGetAllOrders() {
-        when(orderService.getAllOrders()).thenReturn(ResponseEntity.ok("Mocked Order List"));
+    void addOrder() throws Exception {
+        // Mocking the service response
+        when(clientService.findByUsername("testUser")).thenReturn(new Client());
+        when(orderService.addOrder(any())).thenReturn(ResponseEntity.ok().build());
 
-        ResponseEntity<Object> response = orderController.getAllOrders();
+        MockMvc mockMvc = MockMvcBuilders.standaloneSetup(orderController).build();
 
-        assertEquals(ResponseEntity.ok("Mocked Order List"), response);
+        mockMvc.perform(MockMvcRequestBuilders.post("/orders/addOrder")
+                        .param("username", "testUser"))
+                .andDo(print())  // Print request and response details for debugging
+                .andExpect(MockMvcResultMatchers.status().isOk());
     }
 
     @Test
-    void testAcceptOrder() {
-        int orderId = 1;
-        when(orderService.acceptOrder(orderId)).thenReturn(ResponseEntity.ok("Order accepted successfully"));
+    void acceptOrder() throws Exception {
+        // Mocking the service response
+        when(orderService.acceptOrder(1)).thenReturn(ResponseEntity.ok().build());
 
-        ResponseEntity<Object> response = orderController.acceptOrder(orderId);
+        MockMvc mockMvc = MockMvcBuilders.standaloneSetup(orderController).build();
 
-        assertEquals(ResponseEntity.ok("Order accepted successfully"), response);
+        mockMvc.perform(MockMvcRequestBuilders.put("/orders/acceptOrder/1"))
+                .andExpect(MockMvcResultMatchers.status().isOk());
     }
 
     @Test
-    void testCancelOrder() {
-        int orderId = 1;
-        when(orderService.cancelOrder(orderId)).thenReturn(ResponseEntity.ok("Order canceled successfully"));
+    void cancelOrder() throws Exception {
+        // Mocking the service response
+        when(orderService.cancelOrder(1)).thenReturn(ResponseEntity.ok().build());
 
-        ResponseEntity<Object> response = orderController.cancelOrder(orderId);
+        MockMvc mockMvc = MockMvcBuilders.standaloneSetup(orderController).build();
 
-        assertEquals(ResponseEntity.ok("Order canceled successfully"), response);
+        mockMvc.perform(MockMvcRequestBuilders.delete("/orders/deleteOrder/1"))
+                .andExpect(MockMvcResultMatchers.status().isOk());
     }
 }
