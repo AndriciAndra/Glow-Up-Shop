@@ -19,7 +19,7 @@ import static org.mockito.Mockito.*;
 class CartRepositoryTest {
 
     @Mock
-    private CartRepository cartRepository; // Use @Mock for interface
+    private CartRepository cartRepository;
 
     @InjectMocks
     private CartController cartController;
@@ -36,17 +36,12 @@ class CartRepositoryTest {
 
         when(cartRepository.findByClient_Username("testUser")).thenReturn(Optional.of(cart));
 
-        // Act
         Optional<Cart> result = cartRepository.findByClient_Username("testUser");
 
-        // Assert
         assertThat(result).isPresent();
         assertThat(result.get().getId()).isEqualTo(1);
         assertThat(result.get().getClient().getUsername()).isEqualTo("testUser");
 
-        // Verify
         verify(cartRepository, times(1)).findByClient_Username("testUser");
     }
-
-    // Add more test cases as needed for other methods in CartRepository
 }
