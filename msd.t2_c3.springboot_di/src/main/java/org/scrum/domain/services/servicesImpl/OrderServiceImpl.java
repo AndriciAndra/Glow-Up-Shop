@@ -31,6 +31,8 @@ public class OrderServiceImpl implements OrderService {
             OrderDetail orderDetail = new OrderDetail();
             orderDetail.setOrderId(order);
             orderDetail.setItem(item.getItem());
+            orderDetail.setTotalQuantity(item.getQuantity());
+            orderDetail.setTotalPrice(item.getPrice()* item.getQuantity());
             orderDetailRepository.save(orderDetail);
             orderDetailList.add(orderDetail);
         }

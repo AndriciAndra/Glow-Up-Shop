@@ -18,7 +18,7 @@ public class ClientHasReservation {
     @JoinColumn(name = "client_id", referencedColumnName = "id")
     private Client client;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "reservation_id", referencedColumnName = "id")
     private Reservation reservation;
 }

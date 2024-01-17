@@ -2,11 +2,13 @@ package org.scrum.domain.services;
 
 import org.scrum.domain.project.Facility;
 import org.scrum.domain.project.dto.FacilityDto;
+import org.scrum.domain.project.dto.ItemDto;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
 public interface FacilityService {
-    List<Facility> getAll();
+    List<FacilityDto> getAll();
 
-    Facility addFacility(FacilityDto facility);
+    Facility addFacility(MultipartFile imageItem, FacilityDto facilityDto);
 }

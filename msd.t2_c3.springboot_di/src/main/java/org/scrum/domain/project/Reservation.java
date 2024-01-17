@@ -25,8 +25,7 @@ public class Reservation {
     private Date startDate;
     private Date endDate;
 
-    public Reservation(String status, Date startDate, Date endDate) {
-        this.status = status;
+    public Reservation(Date startDate, Date endDate) {
         this.startDate = startDate;
         this.endDate = endDate;
     }
